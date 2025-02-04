@@ -32,7 +32,7 @@ jobs:
       - name: Install additional dependencies
         shell: msys2 {0}
         run: |
-          pacman -S --needed --noconfirm mingw-w64-x86_64-gdk-pixbuf2 mingw-w64-x86_64-pango mingw-w64-x86_64-gtk4
+          pacman -S --needed --noconfirm mingw-w64-x86_64-gdk-pixbuf2 mingw-w64-x86_64-pango mingw-w64-x86_64-gtk4 mingw-w64-x86_64-gtk4-devel mingw-w64-x86_64-toolkit
       - name: Build GTK+ application
         shell: msys2 {0}
         run: |
@@ -44,6 +44,7 @@ jobs:
           LIBS=$(pkg-config --libs gtk4)
           pkg-config --cflags --libs gtk4
           ls /mingw64/lib
+          ls /mingw64/lib/glib-2.0
           MINGW_BIN_DIR="/c/msys64/mingw64/bin"
           for lib in $LIBS; do
               echo $lib
