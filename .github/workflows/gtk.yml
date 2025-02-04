@@ -29,7 +29,7 @@ jobs:
             mingw-w64-x86_64-gdk-pixbuf2
       
       - name: Install additional dependencies
-        shell: cmd
+        shell: msys2 {0}
         run: |
           pacman -S --needed --noconfirm ^
                  mingw-w64-x86_64-gdk-pixbuf2 ^
@@ -37,7 +37,7 @@ jobs:
                  mingw-w64-x86_64-gtk3
           ^
       - name: Build GTK+ application
-        shell: cmd
+        shell: msys2 {0}
         run: |
           echo "Building GTK+ application..."
           mkdir build
