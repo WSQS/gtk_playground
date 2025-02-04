@@ -44,6 +44,7 @@ jobs:
           LIBS=$(pkg-config --libs gtk4)
           MINGW_BIN_DIR="/c/msys64/mingw64/bin"
           for lib in $LIBS; do
+              echo $lib
               if [[ $lib == "-l"* ]]; then
                   dll_name=$(echo $lib | cut -c3-).dll
                   dll_path=$MINGW_BIN_DIR/$dll_name
