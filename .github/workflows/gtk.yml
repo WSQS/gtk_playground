@@ -27,6 +27,7 @@ jobs:
             mingw-w64-x86_64-gtk3
             mingw-w64-x86_64-pango
             mingw-w64-x86_64-gdk-pixbuf2
+            pkg-config
       
       - name: Install additional dependencies
         shell: msys2 {0}
@@ -39,4 +40,4 @@ jobs:
           mkdir build
           mkdir dist
           cd build
-          x86_64-w64-mingw32-gcc -o ../dist/main.exe ..\main.c $(pkg-config --cflags --libs gtk+-3.0)
+          x86_64-w64-mingw32-gcc -o ../dist/main.exe ../main.c $(pkg-config --cflags --libs gtk+-3.0)
