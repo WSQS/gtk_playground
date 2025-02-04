@@ -40,4 +40,4 @@ jobs:
           mkdir build
           mkdir dist
           cd build
-          x86_64-w64-mingw32-gcc -o ../dist/main.exe ../main.c $(pkg-config --cflags --libs gtk+-3.0)
+          x86_64-w64-mingw32-gcc -o ../dist/main.exe ../main.cpp $(pkg-config --cflags --libs gtk+-3.0)
