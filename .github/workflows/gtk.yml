@@ -49,6 +49,10 @@ jobs:
           cp /mingw64/bin/libintl-8.dll ../dist/
           cp /mingw64/bin/libpcre2-8-0.dll ../dist/
           cp /mingw64/bin/zlib1.dll ../dist/
+          cp /mingw64/bin/libgmodule-2.0-0.dll ../dist/
+          cp /mingw64/bin/libiconv-2.dll ../dist/
+          cp /mingw64/bin/libgcc_s_seh-1.dll ../dist/
+          cp /mingw64/bin/libcairo-gobject-2.dll ../dist/
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
