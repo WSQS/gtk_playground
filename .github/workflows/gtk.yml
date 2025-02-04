@@ -24,7 +24,7 @@ jobs:
           install: |
             base-devel
             mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-gtk3
+            mingw-w64-x86_64-gtk4
             mingw-w64-x86_64-pango
             mingw-w64-x86_64-gdk-pixbuf2
             pkg-config
@@ -32,7 +32,7 @@ jobs:
       - name: Install additional dependencies
         shell: msys2 {0}
         run: |
-          pacman -S --needed --noconfirm mingw-w64-x86_64-gdk-pixbuf2 mingw-w64-x86_64-pango mingw-w64-x86_64-gtk3
+          pacman -S --needed --noconfirm mingw-w64-x86_64-gdk-pixbuf2 mingw-w64-x86_64-pango mingw-w64-x86_64-gtk4
       - name: Build GTK+ application
         shell: msys2 {0}
         run: |
