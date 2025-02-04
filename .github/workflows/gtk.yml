@@ -42,17 +42,18 @@ jobs:
           cd build
           x86_64-w64-mingw32-gcc -o ../dist/main.exe ../main.cpp $(pkg-config --cflags --libs gtk4)
           ls /mingw64/bin
-          cp /mingw64/bin/libgio-2.0-0.dll ../dist/
-          cp /mingw64/bin/libgobject-2.0-0.dll ../dist/
-          cp /mingw64/bin/libgtk-4-1.dll ../dist/
-          cp /mingw64/bin/libglib-2.0-0.dll ../dist/
-          cp /mingw64/bin/libintl-8.dll ../dist/
-          cp /mingw64/bin/libpcre2-8-0.dll ../dist/
-          cp /mingw64/bin/zlib1.dll ../dist/
-          cp /mingw64/bin/libgmodule-2.0-0.dll ../dist/
-          cp /mingw64/bin/libiconv-2.dll ../dist/
-          cp /mingw64/bin/libgcc_s_seh-1.dll ../dist/
-          cp /mingw64/bin/libcairo-gobject-2.dll ../dist/
+          # cp /mingw64/bin/libgio-2.0-0.dll ../dist/
+          # cp /mingw64/bin/libgobject-2.0-0.dll ../dist/
+          # cp /mingw64/bin/libgtk-4-1.dll ../dist/
+          # cp /mingw64/bin/libglib-2.0-0.dll ../dist/
+          # cp /mingw64/bin/libintl-8.dll ../dist/
+          # cp /mingw64/bin/libpcre2-8-0.dll ../dist/
+          # cp /mingw64/bin/zlib1.dll ../dist/
+          # cp /mingw64/bin/libgmodule-2.0-0.dll ../dist/
+          # cp /mingw64/bin/libiconv-2.dll ../dist/
+          # cp /mingw64/bin/libgcc_s_seh-1.dll ../dist/
+          # cp /mingw64/bin/libcairo-gobject-2.dll ../dist/
+          cp /mingw64/bin/*.dll ../dist/
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
