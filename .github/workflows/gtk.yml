@@ -41,6 +41,22 @@ jobs:
           mkdir dist
           cd build
           x86_64-w64-mingw32-gcc -o ../dist/main.exe ../main.cpp $(pkg-config --cflags --libs gtk4)
+          MINGW_BIN_DIR="/c/msys64/mingw64/bin"
+          for lib in $LIBS; do
+              if [[ $lib == "-l"* ]]; then
+                  dll_name=$(echo $lib | cut -c3-).dll
+                  dll_path=$MINGW_BIN_DIR/$dll_name
+                  if [ -f "$dll_path" ]; then
+                      cp "$dll_path" ../dist/
+                      if [ $? -ne 0 ]; then
+                          echo "Error: Failed to copy $dll_path"
+                          exit 1
+                      fi
+                  else
+                      echo "Warning: $dll_path not found."
+                  fi
+              fi
+          done
       - name: Upload binary
         uses: actions/upload-artifact@v4
         with:
