@@ -24,10 +24,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Set up MSYS2
+      - name: Set up MSYS2 environment
         uses: msys2/setup-msys2@v2
         with:
-          components: mingw64/mingw-w64-x86_64-gcc msys/mingw-w64-x86_64-gtk3
+          msys2Arch: 'msys'
+          msys2Path: true
+          # 选择需要的组件，这里选择了 MinGW 64位 GCC 和 GTK3
+          msys2Mirrors: 'https://mirrors.ustc.edu.cn/msys2/'
+          # 安装必要的开发工具和依赖
+          install:
+            - base-devel
+            - mingw-w64-x86_64-gcc
+            - mingw-w64-x86_64-gtk3
       - name: Install GTK+ dependencies
         run: |
           pacman -S --needed base-devel mingw-w64-x86_64-gcc mingw-w64-x86_64-gtk3
