@@ -1,46 +1,47 @@
-name: Compile GTK+ Application
-on: [push]
+name: Build and Test
+
+on:
+  push:
+    branches: ["*"]
+
+env:
+  MSYS_MIRROR: https://mirrors.ustc.edu.cn/msys2/
+  MSYS pacman pacman_options: --noconfirm
+
 jobs:
-  build-linux:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Set up GCC
-        uses: actions/setup-linux-gcc@v3
-        with:
-          version: 12.x
-      - name: Install GTK+ dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev build-essential
-      - name: Build for Linux
-        run: |
-          mkdir -p build/linux
-          gcc -o build/linux/my-gtk-app main.c $(pkg-config --cflags --libs gtk+-3.0)
-  
-  build-windows:
+  build:
     runs-on: windows-latest
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      
       - name: Set up MSYS2 environment
-        uses: msys2/setup-msys2@v2
+        uses: msys2/setup-msys2@v3
         with:
-          msys2Arch: 'msys'
+          msys2Arch: 'mingw64'
           msys2Path: true
-          # 选择需要的组件，这里选择了 MinGW 64位 GCC 和 GTK3
-          msys2Mirrors: 'https://mirrors.ustc.edu.cn/msys2/'
-          # 安装必要的开发工具和依赖
-          install:
-            - base-devel
-            - mingw-w64-x86_64-gcc
-            - mingw-w64-x86_64-gtk3
-      - name: Install GTK+ dependencies
+          install: |
+            base-devel
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-gtk3
+            mingw-w64-x86_64-pango
+            mingw-w64-x86_64-gdk-pixbuf2
+      
+      - name: Install additional dependencies
+        shell: cmd
         run: |
-          pacman -S --needed base-devel mingw-w64-x86_64-gcc mingw-w64-x86_64-gtk3
-      - name: Build for Windows
+          pacman -S --needed --noconfirm ^
+                 mingw-w64-x86_64-gdk-pixbuf2 ^
+                 mingw-w64-x86_64-pango ^
+                 mingw-w64-x86_64-gtk3
+          ^
+      - name: Build GTK+ application
+        shell: cmd
         run: |
-          mkdir -p build/windows
-          x86_64-w64-mingw32-gcc -o build/windows/my-gtk-app.exe main.c ^
-               $(pkg-config --cflags --libs gtk+-3.0)
+          echo "Building GTK+ application..."
+          mkdir build
+          cd build
+          x86_64-w64-mingw32-gcc -o ../dist/main.exe ^
+                 ..\main.c ^
+                 $(pkg-config --cflags --libs gtk+-3.0)
