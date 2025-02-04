@@ -42,6 +42,7 @@ jobs:
           cd build
           x86_64-w64-mingw32-gcc -o ../dist/main.exe ../main.cpp $(pkg-config --cflags --libs gtk4)
           LIBS=$(pkg-config --libs gtk4)
+          pkg-config --cflags --libs gtk4
           MINGW_BIN_DIR="/c/msys64/mingw64/bin"
           for lib in $LIBS; do
               echo $lib
