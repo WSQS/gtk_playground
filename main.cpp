@@ -18,6 +18,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
   auto button = gtk_button_new_with_label("Hello World");
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), NULL);
+  g_signal_connect_swapped (button, "clicked", G_CALLBACK (gtk_window_close), gtk_window);
   gtk_box_append (GTK_BOX (box), button);
   
   gtk_window_present(gtk_window);
