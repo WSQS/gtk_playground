@@ -7,6 +7,7 @@ static void print_hello(GtkWidget *, gpointer) {
   g_print("Hello World\n");
 }
 inline auto add_number(int* number){
+  g_print("add number %d",*number);
   gtk_label_set_label(GTK_LABEL(label), std::to_string(*number).data()); 
 }
 inline auto add_button(GtkGrid *grid, int number) {
