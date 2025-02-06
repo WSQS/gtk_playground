@@ -1,4 +1,5 @@
 #include <gtk/gtk.h>
+#include <memory>
 #include <string> // to_string
 
 class label_wrapper {
@@ -23,18 +24,40 @@ public:
 
 label_wrapper screen{};
 
+class button_wrapper {
+  GtkWidget *button{nullptr};
+  std::string string{};
+  static void print_label(std::string *label) {
+    g_print("Button %s clicked\n", (*label).data());
+  }
+
+public:
+  void init(std::string input_string = {}) {
+    string = input_string;
+    button = gtk_button_new_with_label(string.data());
+    g_signal_connect_swapped(button, "clicked", G_CALLBACK(print_label),
+                             &string);
+  }
+  void set_label(const std::string &input_string) {
+    string = input_string;
+    gtk_button_set_label(GTK_BUTTON(button), string.data());
+  }
+  auto get() { return button; }
+};
+
 static void print_hello(GtkWidget *, gpointer) { g_print("Hello World\n"); }
 
 inline auto add_number(int *number) {
-  g_print("add number %d\n", *number);
   screen.append(std::to_string(*number));
 }
 inline auto add_button(GtkGrid *grid, int number) {
-  auto button = gtk_button_new_with_label(std::to_string(number).data());
-  gtk_grid_attach(grid, button, (number - 1) % 3, (number - 1) / 3, 1, 1);
-  g_signal_connect(button, "clicked", G_CALLBACK(print_hello), nullptr);
+  auto button = new button_wrapper();
+  button->init(std::to_string(number));
+  gtk_grid_attach(grid, button->get(), (number - 1) % 3, (number - 1) / 3, 1,
+                  1);
+  g_signal_connect(button->get(), "clicked", G_CALLBACK(print_hello), nullptr);
   auto i = new int(number);
-  g_signal_connect_swapped(button, "clicked", G_CALLBACK(add_number), i);
+  g_signal_connect_swapped(button->get(), "clicked", G_CALLBACK(add_number), i);
 }
 static void activate(GtkApplication *app, gpointer) {
   auto window = gtk_application_window_new(app);
