@@ -14,7 +14,7 @@ inline auto add_button(GtkGrid *grid, int number) {
   gtk_grid_attach(grid, button, (number - 1) % 3, (number - 1) / 3, 1, 1);
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), nullptr);
   auto i = new int(number);
-  g_signal_connect_swapped(button, "clicked", G_CALLBACK(add_number),i);
+  // g_signal_connect_swapped(button, "clicked", G_CALLBACK(add_number),i);
 }
 static void activate(GtkApplication *app, gpointer) {
   auto window = gtk_application_window_new(app);
