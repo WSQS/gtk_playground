@@ -34,7 +34,7 @@ static void activate(GtkApplication *app, gpointer) {
   g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_window_close),
                            gtk_window);
   GtkWidget* label = gtk_label_new(nullptr);
-  gtk_box_append(GTK_BOX(box),label);
+  // gtk_box_append(GTK_BOX(box),label);
   gtk_box_append(GTK_BOX(box), grid);
 
   gtk_window_present(gtk_window);
