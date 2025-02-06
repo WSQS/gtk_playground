@@ -1,13 +1,13 @@
 #include <gtk/gtk.h>
 #include <string> // to_string
 
-GtkWidget* label = gtk_label_new(nullptr);
+// GtkWidget* label = gtk_label_new(nullptr);
 
 static void print_hello(GtkWidget *, gpointer) {
   g_print("Hello World\n");
 }
 inline auto add_number(int* number){
-  gtk_label_set_label(GTK_LABEL(label), std::to_string(*number).data()); 
+  // gtk_label_set_label(GTK_LABEL(label), std::to_string(*number).data()); 
 }
 inline auto add_button(GtkGrid *grid, int number) {
   auto button = gtk_button_new_with_label(std::to_string(number).data());
