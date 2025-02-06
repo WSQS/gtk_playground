@@ -1,7 +1,7 @@
 #include <gtk/gtk.h>
 #include <string> // to_string
 
-static void print_hello(GtkWidget *widget, gpointer data) {
+static void print_hello(GtkWidget *, gpointer) {
   g_print("Hello World\n");
 }
 inline auto add_number(GtkGrid *grid, int number) {
@@ -9,7 +9,7 @@ inline auto add_number(GtkGrid *grid, int number) {
   gtk_grid_attach(grid, button, (number - 1) % 3, (number - 1) / 3, 1, 1);
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), nullptr);
 }
-static void activate(GtkApplication *app, gpointer user_data) {
+static void activate(GtkApplication *app, gpointer) {
   auto window = gtk_application_window_new(app);
   auto gtk_window = GTK_WINDOW(window);
   gtk_window_set_title(gtk_window, "Hello");
