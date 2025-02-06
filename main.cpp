@@ -1,13 +1,33 @@
 #include <gtk/gtk.h>
 #include <string> // to_string
 
-GtkWidget *label = nullptr;
+class label_wrapper {
+  GtkWidget *label{nullptr};
+  std::string string{};
+
+public:
+  void init(std::string input_string = {}) {
+    string = input_string;
+    label = gtk_label_new(string.data());
+  }
+  void set_label(const std::string &input_string) {
+    string = input_string;
+    gtk_label_set_label(GTK_LABEL(label), string.data());
+  }
+  void append(const std::string &input_string) {
+    string += input_string;
+    gtk_label_set_label(GTK_LABEL(label), string.data());
+  }
+  auto get() { return label; }
+};
+
+label_wrapper screen{};
 
 static void print_hello(GtkWidget *, gpointer) { g_print("Hello World\n"); }
 
 inline auto add_number(int *number) {
   g_print("add number %d\n", *number);
-  gtk_label_set_label(GTK_LABEL(label), std::to_string(*number).data());
+  screen.append(std::to_string(*number));
 }
 inline auto add_button(GtkGrid *grid, int number) {
   auto button = gtk_button_new_with_label(std::to_string(number).data());
@@ -33,8 +53,8 @@ static void activate(GtkApplication *app, gpointer) {
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), nullptr);
   g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_window_close),
                            gtk_window);
-  label = gtk_label_new(nullptr);
-  gtk_box_append(GTK_BOX(box),label);
+  screen.init();
+  gtk_box_append(GTK_BOX(box), screen.get());
   gtk_box_append(GTK_BOX(box), grid);
 
   gtk_window_present(gtk_window);
