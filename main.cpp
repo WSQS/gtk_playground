@@ -1,21 +1,20 @@
 #include <gtk/gtk.h>
 #include <string> // to_string
 
-GtkWidget* label = nullptr;
+GtkWidget *label = nullptr;
 
-static void print_hello(GtkWidget *, gpointer) {
-  g_print("Hello World\n");
-}
-inline auto add_number(int* number){
-  g_print("add number %d",*number);
-  gtk_label_set_label(GTK_LABEL(label), std::to_string(*number).data()); 
+static void print_hello(GtkWidget *, gpointer) { g_print("Hello World\n"); }
+
+inline auto add_number(int *number) {
+  g_print("add number %d\n", *number);
+  gtk_label_set_label(GTK_LABEL(label), std::to_string(*number).data());
 }
 inline auto add_button(GtkGrid *grid, int number) {
   auto button = gtk_button_new_with_label(std::to_string(number).data());
   gtk_grid_attach(grid, button, (number - 1) % 3, (number - 1) / 3, 1, 1);
   g_signal_connect(button, "clicked", G_CALLBACK(print_hello), nullptr);
   auto i = new int(number);
-  g_signal_connect_swapped(button, "clicked", G_CALLBACK(add_number),i);
+  g_signal_connect_swapped(button, "clicked", G_CALLBACK(add_number), i);
 }
 static void activate(GtkApplication *app, gpointer) {
   auto window = gtk_application_window_new(app);
@@ -35,7 +34,7 @@ static void activate(GtkApplication *app, gpointer) {
   g_signal_connect_swapped(button, "clicked", G_CALLBACK(gtk_window_close),
                            gtk_window);
   label = gtk_label_new(nullptr);
-  // gtk_box_append(GTK_BOX(box),label);
+  gtk_box_append(GTK_BOX(box),label);
   gtk_box_append(GTK_BOX(box), grid);
 
   gtk_window_present(gtk_window);
