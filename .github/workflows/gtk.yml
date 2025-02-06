@@ -19,8 +19,6 @@ jobs:
       - name: Set up MSYS2 environment
         uses: msys2/setup-msys2@v2
         with:
-          msys2Arch: 'mingw64'
-          msys2Path: true
           install: |
             base-devel
             mingw-w64-x86_64-gcc
