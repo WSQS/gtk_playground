@@ -45,7 +45,6 @@ static void activate(GtkApplication *app, gpointer) {
   auto box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
   gtk_widget_set_halign(box, GTK_ALIGN_CENTER);
   gtk_widget_set_valign(box, GTK_ALIGN_CENTER);
-  gtk_widget_set_halign(screen.get(),GTK_ALIGN_CENTER);
   for (int i = 1; i < 10; ++i)
     add_button(GTK_GRID(grid), i);
   gtk_window_set_child(GTK_WINDOW(window), box);
